@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+
 const mongoose = require("mongoose");
 const SocialLinkSchema = require("./models/Social.Schema");
 const cors = require("cors");
 const JobTypeModel = require("./models/JobType.schema");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8180;
 app.use(express.json());
 app.use(cors());
+mongoose.set('strictQuery', false);
 app.post("/admin", (req, res) => {
   const { name, password } = req.body;
   if (name == "admin" || password == "1234") {
@@ -54,7 +56,7 @@ app.get("/job", async (req, res) => {
     res.status(500).send(e.message);
   }
 });
-mongoose.connect(process.env.MONGODB_URL).then(() =>
+mongoose.connect("mongodb+srv://sharun:123@atlascluster.qwa1fxi.mongodb.net/argumentic?retryWrites=true&w=majority").then(() =>
   app.listen(PORT, () => {
     console.log(`Your app is running on ${PORT}`);
   })
